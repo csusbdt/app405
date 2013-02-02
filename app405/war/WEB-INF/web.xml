@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?><web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.5" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
+	<!-- Filters -->
+	
+	<filter>
+		<filter-name>AdminFilter</filter-name>
+		<filter-class>app.AdminFilter</filter-class>
+	</filter>
+
 	<!-- Servlets -->
 	
 	<servlet>
@@ -21,6 +28,13 @@
 		</init-param>
 	</servlet>
 
+	<!-- Filter mappings -->
+	
+	<filter-mapping>
+		<filter-name>AdminFilter</filter-name>
+		<url-pattern>/admin.jsp</url-pattern>
+	</filter-mapping>
+
 	<!-- Servlet mappings -->
 	
 	<servlet-mapping>
@@ -41,7 +55,7 @@
 	<!-- Welcome file list -->
 	
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 	
 </web-app>

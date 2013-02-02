@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -22,11 +21,11 @@
     <![endif]-->
 
     <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
-                    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="../assets/ico/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="img/favicon.png">
   </head>
 
   <body>
@@ -53,13 +52,8 @@
 
     <div class="container">
 
-      <h1>Admin Functions</h1>
-      
-      <textarea id="admin-message"></textarea>
-      
-      <br>
-      
-      <button id="save-message-btn">Save Message</button>
+      <h1>App 405</h1>
+      <p id="admin-message"></p>
 
     </div> <!-- /container -->
 
@@ -67,9 +61,7 @@
     <script src="js/bootstrap.min.js"></script>
     
     <script>
-      window.app = {};
-      
-      app.getAdminMsg = function() {
+      $(function() {
         $.ajax({
           url: 'get-admin-message',
           cache: false,
@@ -85,35 +77,6 @@
         })
         .fail(function(jqXHR, textStatus) {
           $('#admin-message').html(textStatus);
-        });
-      };
-      
-      app.saveAdminMsg = function() {
-        $.ajax({
-          url: 'set-admin-message',
-          cache: false,
-          dataType: 'json',
-          type: 'POST',
-          data: {
-            text: $('#admin-message').val()
-          }
-        })
-        .done(function(data) {
-          if (data.error) {
-            alert(data.error);
-          } else {
-            alert('All good.');
-          }
-        })
-        .fail(function(jqXHR, textStatus) {
-          alert(textStatus);
-        });
-      };
-      
-      $(function() {
-        app.getAdminMsg();        
-        $('#save-message-btn').click(function() {
-          app.saveAdminMsg();
         });
       });
     </script>

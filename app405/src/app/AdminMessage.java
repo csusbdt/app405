@@ -3,13 +3,16 @@ package app;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.EntityNotFoundException;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Text;
 
 public class AdminMessage
 {
 	private static final String entityKind = "AdminMessage";
 	private static final String textPropertyName = "text";
+	private static final long id = 1;
 	
 	private Entity entity = null;
 
@@ -38,36 +41,28 @@ public class AdminMessage
 	public static AdminMessage createOrUpdate(String text)
 	{
 		AdminMessage message = getAdminMessage();
-		if (message != null)
-		{
-			message.setText(text);
-		}
-		else
-		{
-			Entity entity = new Entity(entityKind);
-			entity.setProperty(textPropertyName, new Text(text));
-			message = new AdminMessage(entity);
-		}
+		message.setText(text);
 		message.save();
 		return message;
 	}
 
 	public static AdminMessage getAdminMessage()
 	{
-		Query query = new Query(entityKind);
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		Entity entity = datastore.prepare(query).asSingleEntity();
-		if (entity == null)
+		Key key = KeyFactory.createKey(entityKind, id);
+		Entity entity = null;
+		try
 		{
-			entity = new Entity(entityKind);
+			entity = datastore.get(key);
+		}
+		catch (EntityNotFoundException e)
+		{
+			entity = new Entity(entityKind, id);
 			entity.setProperty(textPropertyName, new Text("default message"));
 			AdminMessage message = new AdminMessage(entity);
 			message.save();
 			return message;
 		}
-		else
-		{
-			return new AdminMessage(entity);
-		}
+		return new AdminMessage(entity);
 	}
 }
