@@ -1,25 +1,47 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?><web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.5" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<!-- Servlets -->
+	
 	<servlet>
-		<servlet-name>App405</servlet-name>
-		<servlet-class>app.App405Servlet</servlet-class>
+		<servlet-name>GetAdminMessageServlet</servlet-name>
+		<servlet-class>app.GetAdminMessageServlet</servlet-class>
 	</servlet>
+	
+	<servlet>
+		<servlet-name>SetAdminMessageServlet</servlet-name>
+		<servlet-class>app.SetAdminMessageServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>SystemServiceServlet</servlet-name>
+		<servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
+		<init-param>
+			<param-name>services</param-name>
+			<param-value/>
+		</init-param>
+	</servlet>
+
+	<!-- Servlet mappings -->
+	
 	<servlet-mapping>
-		<servlet-name>App405</servlet-name>
-		<url-pattern>/app405</url-pattern>
+		<servlet-name>GetAdminMessageServlet</servlet-name>
+		<url-pattern>/get-admin-message</url-pattern>
 	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>SetAdminMessageServlet</servlet-name>
+		<url-pattern>/set-admin-message</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>SystemServiceServlet</servlet-name>
+		<url-pattern>/_ah/spi/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- Welcome file list -->
+	
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
- <servlet>
-  <servlet-name>SystemServiceServlet</servlet-name>
-  <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
-  <init-param>
-   <param-name>services</param-name>
-   <param-value/>
-  </init-param>
- </servlet>
- <servlet-mapping>
-  <servlet-name>SystemServiceServlet</servlet-name>
-  <url-pattern>/_ah/spi/*</url-pattern>
- </servlet-mapping>
+	
 </web-app>
