@@ -42,8 +42,7 @@
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li><a href="${loginUrl}">Login</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -62,11 +61,13 @@
 
     </div> <!-- /container -->
 
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     
     <script>
-      window.app = {};
+      window.app = {
+        loginUrl: '${loginUrl}'
+      };
       
       app.getAdminMsg = function() {
         $.ajax({
@@ -78,6 +79,8 @@
         .done(function(data) {
           if (data.msg) {
             $('#admin-message').html(data.msg);
+          } else if (data.login) {
+            location.replace(app.loginUrl);
           } else {
             $('#admin-message').html('ERROR');
           }

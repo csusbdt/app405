@@ -38,12 +38,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Project name</a>
+          <a class="brand" href="">App 405</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li class="active"><a id="homeLink"    href="#">Home</a>    </li>
+              <li               ><a id="aboutLink"   href="#">About</a>   </li>
+              <li               ><a id="contactLink" href="#">Contact</a> </li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -52,16 +52,33 @@
 
     <div class="container">
 
-      <h1>App 405</h1>
-      <p id="admin-message"></p>
+      <div id="home">
+        <h1>Home</h1>
+        <p id="admin-message"></p>
+      </div>
+
+      <div id="about" style="display: none">
+        <h1>About</h1>
+        <p>
+           This site is an example application for
+           <a href="https://sites.google.com/site/serverprogramming/">CSE 405</a>.
+        </p>
+      </div>
+
+      <div id="contact" style="display: none">
+        <h1>Contact</h1>
+        <p><a href="http://cse.csusb.edu/turner/">David Turner</a></p>
+      </div>
 
     </div> <!-- /container -->
 
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     
     <script>
-      $(function() {
+      window.app = {};
+
+      app.getAdminMsg = function() {
         $.ajax({
           url: 'get-admin-message',
           cache: false,
@@ -78,6 +95,25 @@
         .fail(function(jqXHR, textStatus) {
           $('#admin-message').html(textStatus);
         });
+      }
+ 
+      app.screen = function(id) {
+        app.$screenLink.parent().removeClass('active');
+        app.$screen.fadeOut(100, function() {
+          app.$screen.fadeIn(200);
+        });
+        app.$screenLink = $('#' + id + 'Link');
+        app.$screenLink.parent().addClass('active');
+        app.$screen = $('#' + id);
+      };
+
+      $(function() {
+        app.$screen     = $('#home');
+        app.$screenLink = $('#homeLink');
+        app.getAdminMsg();
+        $('#homeLink')    .click(function() { app.screen('home');    return false; } );
+        $('#aboutLink')   .click(function() { app.screen('about');   return false; } );
+        $('#contactLink') .click(function() { app.screen('contact'); return false; } );
       });
     </script>
     

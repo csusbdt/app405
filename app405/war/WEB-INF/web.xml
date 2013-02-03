@@ -3,8 +3,8 @@
 	<!-- Filters -->
 	
 	<filter>
-		<filter-name>AdminFilter</filter-name>
-		<filter-class>app.AdminFilter</filter-class>
+		<filter-name>AdminJspFilter</filter-name>
+		<filter-class>app.AdminJspFilter</filter-class>
 	</filter>
 
 	<!-- Servlets -->
@@ -31,7 +31,7 @@
 	<!-- Filter mappings -->
 	
 	<filter-mapping>
-		<filter-name>AdminFilter</filter-name>
+		<filter-name>AdminJspFilter</filter-name>
 		<url-pattern>/admin.jsp</url-pattern>
 	</filter-mapping>
 

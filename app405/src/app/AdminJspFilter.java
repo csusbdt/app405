@@ -1,6 +1,7 @@
 package app;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
-public class AdminFilter implements Filter
+public class AdminJspFilter implements Filter
 {
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) 
@@ -29,6 +30,7 @@ public class AdminFilter implements Filter
         }
         else if (userService.isUserAdmin())
         {
+        	req.setAttribute("loginUrl", userService.createLoginURL(httpReq.getRequestURI()));
         	chain.doFilter(req, resp);
         }
         else
