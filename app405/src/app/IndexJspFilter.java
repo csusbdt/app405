@@ -1,6 +1,7 @@
 package app;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -9,35 +10,32 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
-public class AdminAjaxFilter implements Filter
+public class IndexJspFilter implements Filter
 {
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) 
 	throws IOException, ServletException
 	{
 		HttpServletRequest httpReq = (HttpServletRequest) req;
-		HttpServletResponse httpResp = (HttpServletResponse) resp;
 		UserService userService = UserServiceFactory.getUserService();
-        if (!userService.isUserLoggedIn())
+        if (userService.isUserLoggedIn())
         {
-        	String continueUrl = httpReq.getRequestURL().toString();
-        	continueUrl = continueUrl.substring(0, continueUrl.lastIndexOf("/"));
-        	continueUrl += "/admin.jsp";
-    		resp.setContentType("application/json");
-    		resp.getWriter().print("{ \"login\" : \"" + userService.createLoginURL(continueUrl) + "\" }");
-        }
-        else if (userService.isUserAdmin())
-        {
+        	req.setAttribute("isAdmin", userService.isUserAdmin());
+        	req.setAttribute("loginUrl", userService.createLogoutURL(httpReq.getRequestURL().toString()));
+        	req.setAttribute("loginTitle", "Logout");
         	chain.doFilter(req, resp);
         }
         else
         {
-        	httpResp.sendError(HttpServletResponse.SC_FORBIDDEN);
+        	req.setAttribute("isAdmin", false);
+        	Logger.getLogger("app").warning(httpReq.getRequestURL().toString());
+        	req.setAttribute("loginUrl", userService.createLoginURL(httpReq.getRequestURL().toString()));
+        	req.setAttribute("loginTitle", "Login");
+        	chain.doFilter(req, resp);
         }
 	}
 

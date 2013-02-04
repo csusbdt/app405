@@ -41,9 +41,13 @@
           <a class="brand" href="">App 405</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a id="homeLink"    href="#">Home</a>    </li>
-              <li               ><a id="aboutLink"   href="#">About</a>   </li>
-              <li               ><a id="contactLink" href="#">Contact</a> </li>
+              <li class="active"><a id="homeLink"    href="#"           >Home</a>          </li>
+              <li               ><a id="aboutLink"   href="#"           >About</a>         </li>
+              <li               ><a id="contactLink" href=""            >Contact</a>       </li>
+              <li               ><a                  href="${loginUrl}" >${loginTitle}</a> </li>
+              <% if ((Boolean) request.getAttribute("isAdmin")) { %>
+                <li><a href="/admin.jsp" >Admin</a></li>
+              <% } %>
             </ul>
           </div><!--/.nav-collapse -->
         </div>

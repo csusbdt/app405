@@ -38,11 +38,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Project name</a>
+          <a class="brand" href="" onclick="return false;">Admin</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="${loginUrl}">Login</a></li>
+              <li class="active"><a href="/">Home</a></li>
+              <li><a href="${logoutUrl}">Logout</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -103,6 +103,9 @@
         .done(function(data) {
           if (data.error) {
             alert(data.error);
+          } else if (data.login) {
+            alert("Save unsuccessful.");
+            location.replace(data.login);
           } else {
             alert('All good.');
           }

@@ -23,6 +23,7 @@ public class SetAdminMessageServlet extends HttpServlet
 		}
 		else
 		{
+			text = text.replaceAll("<", "&lt;"); // cross-site scripting protection
 			AdminMessage.createOrUpdate(text);
 		}
 		resp.getWriter().print(json);

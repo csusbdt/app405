@@ -1,7 +1,6 @@
 package app;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -30,7 +29,10 @@ public class AdminJspFilter implements Filter
         }
         else if (userService.isUserAdmin())
         {
-        	req.setAttribute("loginUrl", userService.createLoginURL(httpReq.getRequestURI()));
+        	String continueUrl = httpReq.getRequestURL().toString();
+        	continueUrl = continueUrl.substring(0, continueUrl.lastIndexOf("/"));
+        	continueUrl += "/";
+        	req.setAttribute("logoutUrl", userService.createLogoutURL(continueUrl));
         	chain.doFilter(req, resp);
         }
         else
