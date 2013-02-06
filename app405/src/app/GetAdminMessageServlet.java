@@ -11,6 +11,6 @@ public class GetAdminMessageServlet extends HttpServlet
 	{
 		AdminMessage adminMessage = AdminMessage.getAdminMessage();
 		resp.setContentType("application/json");
-		resp.getWriter().print("{ \"msg\" : \"" + adminMessage.getText() + "\" }");
+		resp.getWriter().print("{ \"msg\" : \"" + Util.escape(adminMessage.getText()) + "\" }");
 	}
 }
