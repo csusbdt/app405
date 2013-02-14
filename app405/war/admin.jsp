@@ -91,13 +91,26 @@
       };
       
       app.saveAdminMsg = function() {
+        // Extract the csrf token.
+        var csrfStart = document.cookie.indexOf('csrf=') + 5;
+        if (csrfStart === -1) {
+          alert('csrf cookie not found');
+          return;
+        }
+        var csrfEnd = document.cookie.indexOf(csrfStart, ';');
+        if (csrfEnd === -1)
+        {
+        	csrfEnd = document.cookie.length;
+        }
+        var csrfCookie = document.cookie.substring(csrfStart, csrfEnd);
         $.ajax({
           url: 'set-admin-message',
           cache: false,
           dataType: 'json',
           type: 'POST',
           data: {
-            text: $('#admin-message').val()
+            text: $('#admin-message').val(),
+            csrf: csrfCookie
           }
         })
         .done(function(data) {
