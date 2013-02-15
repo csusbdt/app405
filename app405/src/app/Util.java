@@ -1,7 +1,24 @@
 package app;
 
+import java.security.SecureRandom;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 public class Util
-{
+{	
+	static SecureRandom random = new SecureRandom();
+
+	/*
+	 * The following is used to protect against CSRF attacks.
+	 */
+	public static void addCsrfTokenHeader(HttpServletResponse resp)
+	{
+    	// Set the CSRF token cookie.
+    	Cookie csrfCookie = new Cookie("csrf", "" + random.nextLong());
+    	resp.addCookie(csrfCookie);
+	}
+	
 	/*
 	 * The following code extracted from http://code.google.com/p/json-simple/ 
 	 */
@@ -76,6 +93,6 @@ public class Util
 					sb.append(ch);
 				}
 			}
-		}// for
+		}
 	}
 }

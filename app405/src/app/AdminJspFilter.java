@@ -29,6 +29,7 @@ public class AdminJspFilter implements Filter
         }
         else if (userService.isUserAdmin())
         {
+        	Util.addCsrfTokenHeader(httpResp);
         	String continueUrl = httpReq.getRequestURL().toString();
         	continueUrl = continueUrl.substring(0, continueUrl.lastIndexOf("/"));
         	continueUrl += "/";

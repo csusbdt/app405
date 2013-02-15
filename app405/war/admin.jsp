@@ -72,9 +72,9 @@
       app.getAdminMsg = function() {
         $.ajax({
           url: 'get-admin-message',
-          cache: false,
           dataType: 'json',
-          type: 'POST'
+          type: 'POST',
+          headers : { "cache-control": "no-cache" }  // see http://stackoverflow.com/questions/12506897/is-safari-on-ios-6-caching-ajax-results
         })
         .done(function(data) {
           if (data.msg) {
@@ -98,9 +98,8 @@
           return;
         }
         var csrfEnd = document.cookie.indexOf(csrfStart, ';');
-        if (csrfEnd === -1)
-        {
-        	csrfEnd = document.cookie.length;
+        if (csrfEnd === -1) {
+          csrfEnd = document.cookie.length;
         }
         var csrfCookie = document.cookie.substring(csrfStart, csrfEnd);
         $.ajax({
