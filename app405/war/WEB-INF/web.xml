@@ -3,6 +3,16 @@
 	<!-- Filters -->
 	
 	<filter>
+		<filter-name>CsrfSetCookieFilter</filter-name>
+		<filter-class>app.CsrfSetCookieFilter</filter-class>
+	</filter>
+	
+	<filter>
+		<filter-name>CsrfVerifyCookieFilter</filter-name>
+		<filter-class>app.CsrfVerifyCookieFilter</filter-class>
+	</filter>
+	
+	<filter>
 		<filter-name>IndexJspFilter</filter-name>
 		<filter-class>app.IndexJspFilter</filter-class>
 	</filter>
@@ -39,6 +49,16 @@
 	</servlet>
 
 	<!-- Filter mappings -->
+	
+	<filter-mapping>
+		<filter-name>CsrfSetCookieFilter</filter-name>
+		<url-pattern>/*</url-pattern> <!-- Note: this will not affect static content, -->
+	</filter-mapping>                 <!-- which gets delivered via CDN in GAE        -->
+	
+	<filter-mapping>
+		<filter-name>CsrfVerifyCookieFilter</filter-name>
+		<url-pattern>/set-admin-message</url-pattern>
+	</filter-mapping>
 	
 	<filter-mapping>
 		<filter-name>IndexJspFilter</filter-name>

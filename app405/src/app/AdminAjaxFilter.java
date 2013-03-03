@@ -36,9 +36,7 @@ public class AdminAjaxFilter implements Filter
         {
         	// Use cache-control header to break iOS Safari caching; 
         	// see http://stackoverflow.com/questions/12506897/is-safari-on-ios-6-caching-ajax-results 
-        	httpResp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-        	
-        	Util.addCsrfTokenHeader(httpResp);
+        	httpResp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");        	
         	chain.doFilter(req, resp);
         }
         else
